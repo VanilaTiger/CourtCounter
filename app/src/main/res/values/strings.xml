@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">CourtCounter</string>
+    <string name="app_name">Roland Garros Match</string>
+    <color name="court">#ffb300</color>
 </resources>
