@@ -9,7 +9,18 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     public int ScoreA=0;
+    public int BallWonA=0;
+    public int AsServiceA=0;
+    public int DoubleFoulA=0;
+    public int AdvScoreA=0;
+    public int GemsA=0;
     public int ScoreB=0;
+    public int BallWonB=0;
+    public int AsServiceB=0;
+    public int DoubleFoulB=0;
+    public int AdvScoreB=0;
+    public int GemsB=0;
+    public boolean Advantages=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,55 +29,238 @@ public class MainActivity extends AppCompatActivity {
         //displayForTeamA(8);
     }
 
+    public void NewGem(){
+
+        Advantages=false;
+        ScoreA=0;
+        AdvScoreA=0;
+        ScoreB=0;
+        AdvScoreB=0;
+        displayForTeamA(0);
+        displayForTeamB(0);
+
+    }
+
     //Display the score for TeamA
+    public void displayGemsForTeamA(int score){
+        TextView scoreGemsView = (TextView) findViewById(R.id.ScoreGemA);
+        scoreGemsView.setText(""+score);
+    }
+
+    public void displayBallWonForTeamA(int score){
+
+        TextView scoreAsServiceView = (TextView) findViewById(R.id.BBallWonA);
+        scoreAsServiceView.setText("Ball Won: "+score);
+    }
+
+    public void displayAsServiceForTeamA(int score){
+
+        TextView scoreAsServiceView = (TextView) findViewById(R.id.BAsServiceA);
+        scoreAsServiceView.setText("As Service: "+score);
+    }
+
+    public void displayDoubleFoulForTeamA(int score){
+
+        TextView scoreView = (TextView) findViewById(R.id.BDoubleFoulA);
+        scoreView.setText("Double Foul: "+score);
+    }
 
     public void displayForTeamA(int score) {
         TextView scoreView = (TextView) findViewById(R.id.ScoreTextA);
-        scoreView.setText(""+score);
+
+        if (ScoreA>40 && ScoreB>40) {Advantages=true;}
+
+        if (score<40) scoreView.setText(""+score);
+
+        if (score==45) {
+            score=40;
+            scoreView.setText(""+score);
+        }
+
+        if ((score>50)&&(Advantages==false)) {
+            GemsA=GemsA+1;
+            displayGemsForTeamA(GemsA);
+            NewGem();
+        }
     }
 
-    public void Add3Points (View view) {
-        ScoreA=ScoreA+3;
-        displayForTeamA(ScoreA);
+    public void displayAdvantageTeamA(int Calc, String adv){
+        TextView scoreView = (TextView) findViewById(R.id.ScoreTextA);
+
+        if ((AdvScoreA-AdvScoreB==0)&&(Calc==1)) {
+            scoreView.setText("-");
+            displayAdvantageTeamB(0,"-");
+        }
+
+        if ((AdvScoreA-AdvScoreB==1)&&(Calc==1)) {
+            scoreView.setText("Adv");
+            displayAdvantageTeamB(0,"-");
+        }
+
+        if ((AdvScoreA-AdvScoreB==2)&&(Calc==1)) {
+            GemsA=GemsA+1;
+            displayGemsForTeamA(GemsA);
+            NewGem();
+        }
+
+        if (Calc==0) {
+            scoreView.setText(adv);
+        }
+
     }
 
-    public void Add2Points (View view) {
-        ScoreA=ScoreA+2;
-        displayForTeamA(ScoreA);
+    public void AddPointA(View view) {
+        BallWonA=BallWonA+1;
+        displayBallWonForTeamA(BallWonA);
+
+        if (ScoreA>40 && ScoreB>40) Advantages=true;
+        if (!Advantages) {
+            ScoreA = ScoreA + 15;
+            displayForTeamA(ScoreA);
+        }
+        else {
+            AdvScoreA=AdvScoreA+1;
+            displayAdvantageTeamA(1,"");
+        }
+
     }
 
-    public void AddFreePoints (View view) {
-        ScoreA=ScoreA+1;
-        displayForTeamA(ScoreA);
+    public void AddServiceA(View view) {
+        AsServiceA=AsServiceA+1;
+        AddPointA(view);
+
+        TextView scoreAsServiceView = (TextView) findViewById(R.id.BAsServiceA);
+        scoreAsServiceView.setText("As Service: "+AsServiceA);
+    }
+
+    public void AddDoubleFoulA(View view) {
+        DoubleFoulA=DoubleFoulA+1;
+        AddPointB(view);
+
+        TextView scoreView = (TextView) findViewById(R.id.BDoubleFoulA);
+        scoreView.setText("Double Foul: "+DoubleFoulA);
     }
 
     //Display the score for TeamB
 
+    public void displayGemsForTeamB(int score){
+        TextView scoreGemsView = (TextView) findViewById(R.id.ScoreGemB);
+        scoreGemsView.setText(""+score);
+
+    }
+
+    public void displayBallWonForTeamB(int score){
+
+        TextView scoreAsServiceView = (TextView) findViewById(R.id.BBallWonB);
+        scoreAsServiceView.setText("Ball Won: "+score);
+    }
+
+    public void displayAsServiceForTeamB(int score){
+
+        TextView scoreAsServiceView = (TextView) findViewById(R.id.BAsServiceB);
+        scoreAsServiceView.setText("As Service: "+score);
+    }
+
+    public void displayDoubleFoulForTeamB(int score){
+
+        TextView scoreView = (TextView) findViewById(R.id.BDoubleFoulB);
+        scoreView.setText("Double Foul: "+score);
+    }
+
     public void displayForTeamB(int score) {
         TextView scoreView = (TextView) findViewById(R.id.ScoreTextB);
-        scoreView.setText(""+score);
+
+        if (score<40) scoreView.setText(""+score);
+
+        if (score==45) {
+            score=40;
+            scoreView.setText(""+score);
+        }
+
+        if ((score>50)&&(Advantages==false)) {
+            GemsB=GemsB+1;
+            displayGemsForTeamB(GemsB);
+            NewGem();
+        }
+
     }
 
-    public void Add3PointsB (View view) {
-        ScoreB=ScoreB+3;
-        displayForTeamB(ScoreB);
+    public void displayAdvantageTeamB(int Calc, String adv){
+        TextView scoreView = (TextView) findViewById(R.id.ScoreTextB);
+
+        if ((AdvScoreB-AdvScoreA==0)&&(Calc==1)) {
+            scoreView.setText("-");
+            displayAdvantageTeamA(0,"-");
+        }
+
+        if ((AdvScoreB-AdvScoreA==1)&&(Calc==1)) {
+            scoreView.setText("Adv");
+            displayAdvantageTeamA(0,"-");
+        }
+
+        if ((AdvScoreB-AdvScoreA==2)&&(Calc==1)) {
+            GemsB=GemsB+1;
+            displayGemsForTeamB(GemsB);
+            NewGem();
+        }
+
+        if (Calc==0) {
+            scoreView.setText(adv);
+        }
+
     }
 
-    public void Add2PointsB (View view) {
-        ScoreB=ScoreB+2;
-        displayForTeamB(ScoreB);
+    public void AddPointB(View view) {
+        BallWonB=BallWonB+1;
+        displayBallWonForTeamB(BallWonB);
+
+        if (ScoreA>40 && ScoreB>40) Advantages=true;
+        if (!Advantages) {
+            ScoreB = ScoreB + 15;
+            displayForTeamB(ScoreB);
+        }
+        else {
+            AdvScoreB=AdvScoreB+1;
+            displayAdvantageTeamB(1,"");
+        }
     }
 
-    public void AddFreePointsB (View view) {
-        ScoreB=ScoreB+1;
-        displayForTeamB(ScoreB);
+    public void AddServiceB(View view) {
+        AsServiceB=AsServiceB+1;
+        AddPointB(view);
+
+        displayAsServiceForTeamB(AsServiceB);
+    }
+
+    public void AddDoubleFoulB(View view) {
+        DoubleFoulB=DoubleFoulB+1;
+        AddPointA(view);
+
+        displayDoubleFoulForTeamB(DoubleFoulB);
     }
 
     public void ResetScore (View view) {
         ScoreA=0;
         ScoreB=0;
-        displayForTeamA(ScoreA);
-        displayForTeamB(ScoreB);
+        BallWonA=0;
+        BallWonB=0;
+        DoubleFoulA=0;
+        DoubleFoulB=0;
+        AsServiceA=0;
+        AsServiceB=0;
+        GemsA=0;
+        GemsB=0;
+        Advantages=false;
+        displayForTeamA(0);
+        displayGemsForTeamA(0);
+        displayBallWonForTeamA(0);
+        displayAsServiceForTeamA(0);
+        displayDoubleFoulForTeamA(0);
+        displayForTeamB(0);
+        displayGemsForTeamB(0);
+        displayBallWonForTeamB(0);
+        displayAsServiceForTeamB(0);
+        displayDoubleFoulForTeamB(0);
     }
 
 }
