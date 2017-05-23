@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         AdvScoreB = 0;
         displayForTeamA(0);
         displayForTeamB(0);
-
     }
 
     //Display the score for TeamA
