@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //displayForTeamA(8);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -62,13 +61,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayBallWonForTeamA(int score) {
-
         TextView scoreAsServiceView = (TextView) findViewById(R.id.BBallWonA);
         scoreAsServiceView.setText("Ball Won: " + score);
     }
 
     public void displayAsServiceForTeamA(int score) {
-
         TextView scoreAsServiceView = (TextView) findViewById(R.id.BAsServiceA);
         scoreAsServiceView.setText("As Service: " + score);
     }
@@ -161,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
     public void displayGemsForTeamB(int score) {
         TextView scoreGemsView = (TextView) findViewById(R.id.ScoreGemB);
         scoreGemsView.setText("" + score);
-
     }
 
     public void displayBallWonForTeamB(int score) {
@@ -197,9 +193,7 @@ public class MainActivity extends AppCompatActivity {
             displayGemsForTeamB(GemsB);
             NewGem();
         }
-
     }
-
     public void displayAdvantageTeamB(int Calc, String adv) {
         TextView scoreView = (TextView) findViewById(R.id.ScoreTextB);
 
@@ -222,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
         if (Calc == 0) {
             scoreView.setText(adv);
         }
-
     }
 
     public void AddPointB(View view) {
